@@ -7,6 +7,7 @@ import { storage } from '@/lib/storage';
 import { ProjectCard } from '@/components/ProjectCard';
 import { CreateProjectDialog } from '@/components/CreateProjectDialog';
 import { ProjectEditor } from '@/components/ProjectEditor';
+import { ImportHTMLDialog } from '@/components/ImportHTMLDialog';
 import { toast } from 'sonner';
 
 export default function Index() {
@@ -14,6 +15,7 @@ export default function Index() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [importHTMLOpen, setImportHTMLOpen] = useState(false);
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
 
   useEffect(() => {
@@ -79,10 +81,21 @@ export default function Index() {
               <h1 className="text-3xl font-bold mb-1">Methodio</h1>
               <p className="text-muted-foreground">Создавайте пошаговые инструкции</p>
             </div>
-            <Button onClick={() => setCreateDialogOpen(true)} size="lg" className="gap-2">
-              <Icon name="Plus" size={20} />
-              Создать проект
-            </Button>
+            <div className="flex items-center gap-3">
+              <Button 
+                onClick={() => setImportHTMLOpen(true)} 
+                size="lg" 
+                variant="outline"
+                className="gap-2"
+              >
+                <Icon name="FileCode2" size={20} />
+                Импорт HTML
+              </Button>
+              <Button onClick={() => setCreateDialogOpen(true)} size="lg" className="gap-2">
+                <Icon name="Plus" size={20} />
+                Создать проект
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -121,6 +134,11 @@ export default function Index() {
         open={createDialogOpen}
         onOpenChange={setCreateDialogOpen}
         onCreate={handleCreateProject}
+      />
+
+      <ImportHTMLDialog
+        open={importHTMLOpen}
+        onOpenChange={setImportHTMLOpen}
       />
 
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
